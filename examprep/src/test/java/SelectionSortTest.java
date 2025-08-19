@@ -5,15 +5,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 
-import main.java.sorting.BubbleSort;
+import main.java.sorting.SelectionSort;
 
-class BubbleSortTest implements BubbleSort<Integer> {
+class SelectionSortTest implements SelectionSort<Integer> {
 
-    private BubbleSortTest s;
+    private SelectionSortTest s;
 
     @BeforeEach
     void setUp() throws Exception {
-        s = new BubbleSortTest();
+        s = new SelectionSortTest();
     }
 
     @RepeatedTest(20)

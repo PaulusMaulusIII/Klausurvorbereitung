@@ -1,21 +1,23 @@
 package main.java.trees;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Stack;
 
-public abstract class Tree<K,V> implements Iterable<Node<K,V>> {
-    private Node<K,V> rootNode;
-    private Node<K,V> currentNode;
+public abstract class Tree<K extends Comparable<K>, V> implements Iterable<Node<K, V>> {
+    private Node<K, V> rootNode;
+    private Node<K, V> currentNode;
 
     private Traversal traversal = Traversal.INORDER;
 
     public enum Traversal {
         INORDER,
         POSTORDER,
-        PREORDER;   
+        PREORDER;
     }
 
     public enum Rotation {
@@ -29,17 +31,17 @@ public abstract class Tree<K,V> implements Iterable<Node<K,V>> {
         super();
     }
 
-    public Tree(Node<K,V> root) {
+    public Tree(Node<K, V> root) {
         super();
         this.rootNode = root;
     }
 
-    public Node<K,V> getRootNode() {
+    public Node<K, V> getRootNode() {
         return rootNode;
     }
 
-    public Node<K,V> getNode(K key) {
-        for (Node<K,V> node : this) {
+    public Node<K, V> getNode(K key) {
+        for (Node<K, V> node : this) {
             if (node.getKey().equals(key)) {
                 return node;
             }
@@ -63,20 +65,22 @@ public abstract class Tree<K,V> implements Iterable<Node<K,V>> {
         return currentNode;
     }
 
-    public int getNodeDistance(Node<K,V> from, Node<K,V> to) {
-        // Simple implementation: BFS to find distance between two nodes
+    public int getNodeDistance(Node<K, V> from, Node<K, V> to) {
         if (from == null || to == null) {
             return -1;
         }
         if (from == to) {
             return 0;
         }
-        LinkedList<Node<K,V>> queue = new LinkedList<>();
-        java.util.Map<Node<K,V>, Integer> visited = new java.util.HashMap<>();
+        LinkedList<Node<K, V>> queue = new LinkedList<>();
+        Map<Node<K, V>, Integer> visited = new HashMap<>();
         queue.add(from);
         visited.put(from, 0);
         while (!queue.isEmpty()) {
-            Node<K,V> current = queue.poll();
+            Node<K, V> current = queue.poll();
+            if (current == null) {
+                return -1;
+            }
             int distance = visited.get(current);
             if (current == to) {
                 return distance;
@@ -94,13 +98,13 @@ public abstract class Tree<K,V> implements Iterable<Node<K,V>> {
                 visited.put(current.getParent(), distance + 1);
             }
         }
-        return -1; 
+        return -1;
     }
 
     public int getTreeHeight() {
         int height = -1;
-        for (Node<K,V> leaf : getLeaves()) {
-            int dis = getNodeDistance(rootNode, leaf);
+        for (Node<K, V> leaf : getLeaves()) {
+            int dis = getNodeDistance(getRootNode(), leaf);
             if (dis > height) {
                 height = dis;
             }
@@ -110,7 +114,7 @@ public abstract class Tree<K,V> implements Iterable<Node<K,V>> {
 
     public int getSubTreeHeight() {
         int height = -1;
-        for (Node<K,V> leaf : getLeaves()) {
+        for (Node<K, V> leaf : getLeaves()) {
             int dis = getNodeDistance(currentNode, leaf);
             if (dis > height) {
                 height = dis;
@@ -119,9 +123,9 @@ public abstract class Tree<K,V> implements Iterable<Node<K,V>> {
         return height;
     }
 
-    public int getSubTreeHeight(Node<K,V> node) {
+    public int getSubTreeHeight(Node<K, V> node) {
         int height = -1;
-        for (Node<K,V> leaf : getLeaves()) {
+        for (Node<K, V> leaf : getLeaves()) {
             int dis = getNodeDistance(node, leaf);
             if (dis > height) {
                 height = dis;
@@ -130,9 +134,23 @@ public abstract class Tree<K,V> implements Iterable<Node<K,V>> {
         return height;
     }
 
-    public List<Node<K,V>> getLeaves() {
-        List<Node<K,V>> leaves = new LinkedList<Node<K,V>>();
-        for (Node<K,V> node : this) {
+    public int getNodeHeight(Node<K, V> node) {
+        return getNodeDistance(rootNode, node);
+    }
+
+    public int getNodeCount() {
+        int count = 0;
+        Iterator<Node<K, V>> it = this.iterator();
+        while (it.hasNext()) {
+            it.next();
+            count++;
+        }
+        return count;
+    }
+
+    public List<Node<K, V>> getLeaves() {
+        List<Node<K, V>> leaves = new LinkedList<Node<K, V>>();
+        for (Node<K, V> node : this) {
             if ((!node.hasLeft()) && (!node.hasRight())) {
                 leaves.add(node);
             }
@@ -140,7 +158,7 @@ public abstract class Tree<K,V> implements Iterable<Node<K,V>> {
         return leaves;
     }
 
-    public abstract void insertNode(Node<K,V> node);
+    public abstract void insertNode(Node<K, V> node);
 
     public abstract void deleteNode(K key);
 
@@ -149,19 +167,19 @@ public abstract class Tree<K,V> implements Iterable<Node<K,V>> {
     public abstract void rotateSubTree(Rotation r);
 
     @Override
-    public Iterator<Node<K,V>> iterator() {
-        return switch(traversal) {
+    public Iterator<Node<K, V>> iterator() {
+        return switch (traversal) {
             case Traversal.INORDER -> inorderIterator();
             case Traversal.POSTORDER -> postOrderIterator();
             case Traversal.PREORDER -> preOrderIterator();
-            default -> throw new IllegalArgumentException("Unexpected value: " + traversal); 
+            default -> throw new IllegalArgumentException("Unexpected value: " + traversal);
         };
     }
 
-    public Iterator<Node<K,V>> inorderIterator() {
-        return new Iterator<Node<K,V>>() {
-            private Stack<Node<K,V>> stack = new Stack<>();
-            private Node<K,V> current = rootNode;
+    public Iterator<Node<K, V>> inorderIterator() {
+        return new Iterator<Node<K, V>>() {
+            private Stack<Node<K, V>> stack = new Stack<>();
+            private Node<K, V> current = rootNode;
 
             @Override
             public boolean hasNext() {
@@ -169,7 +187,7 @@ public abstract class Tree<K,V> implements Iterable<Node<K,V>> {
             }
 
             @Override
-            public Node<K,V> next() {
+            public Node<K, V> next() {
                 while (current != null) {
                     stack.push(current);
                     current = current.getLeft();
@@ -177,16 +195,16 @@ public abstract class Tree<K,V> implements Iterable<Node<K,V>> {
                 if (stack.isEmpty()) {
                     throw new NoSuchElementException("No next node!");
                 }
-                Node<K,V> node = stack.pop();
+                Node<K, V> node = stack.pop();
                 current = node.getRight();
                 return node;
             }
         };
     }
 
-    public Iterator<Node<K,V>> preOrderIterator() {
-        return new Iterator<Node<K,V>>() {
-            private Stack<Node<K,V>> stack = new java.util.Stack<>();
+    public Iterator<Node<K, V>> preOrderIterator() {
+        return new Iterator<Node<K, V>>() {
+            private Stack<Node<K, V>> stack = new java.util.Stack<>();
 
             {
                 if (rootNode != null) {
@@ -200,11 +218,11 @@ public abstract class Tree<K,V> implements Iterable<Node<K,V>> {
             }
 
             @Override
-            public Node<K,V> next() {
+            public Node<K, V> next() {
                 if (!hasNext()) {
                     throw new NoSuchElementException("No next node!");
                 }
-                Node<K,V> node = stack.pop();
+                Node<K, V> node = stack.pop();
                 if (node.hasRight()) {
                     stack.push(node.getRight());
                 }
@@ -216,11 +234,11 @@ public abstract class Tree<K,V> implements Iterable<Node<K,V>> {
         };
     }
 
-    public Iterator<Node<K,V>> postOrderIterator() {
-        return new Iterator<Node<K,V>>() {
-            private Stack<Node<K,V>> stack = new Stack<>();
-            private Node<K,V> lastVisited = null;
-            private Node<K,V> current = rootNode;
+    public Iterator<Node<K, V>> postOrderIterator() {
+        return new Iterator<Node<K, V>>() {
+            private Stack<Node<K, V>> stack = new Stack<>();
+            private Node<K, V> lastVisited = null;
+            private Node<K, V> current = rootNode;
 
             @Override
             public boolean hasNext() {
@@ -228,7 +246,7 @@ public abstract class Tree<K,V> implements Iterable<Node<K,V>> {
             }
 
             @Override
-            public Node<K,V> next() {
+            public Node<K, V> next() {
                 while (current != null) {
                     stack.push(current);
                     current = current.getLeft();
@@ -236,7 +254,7 @@ public abstract class Tree<K,V> implements Iterable<Node<K,V>> {
                 if (stack.isEmpty()) {
                     throw new NoSuchElementException("No next node!");
                 }
-                Node<K,V> peekNode = stack.peek();
+                Node<K, V> peekNode = stack.peek();
                 if (peekNode.getRight() != null && lastVisited != peekNode.getRight()) {
                     current = peekNode.getRight();
                     return next();
@@ -249,7 +267,7 @@ public abstract class Tree<K,V> implements Iterable<Node<K,V>> {
     }
 
     public void printTree() {
-        printTreeLabeled(rootNode, "", true, "[ROOT]}");
+        printTreeLabeled(rootNode, "", true, "[ROOT] ");
     }
 
     private void printTreeLabeled(Node<K, V> node, String prefix, boolean isTail, String label) {

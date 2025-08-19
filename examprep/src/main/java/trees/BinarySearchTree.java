@@ -1,27 +1,28 @@
 package main.java.trees;
 
-public class BinarySearchTree extends Tree<Integer,Integer> {
+public class BinarySearchTree<K extends Comparable<K>,V> extends Tree<K,V> {
 
-    public BinarySearchTree(Node<Integer, Integer> root) {
+    public BinarySearchTree(Node<K, V> root) {
         super(root);
     }
 
     @Override
-    public void insertNode(Node<Integer,Integer> node) {
+    public void insertNode(Node<K,V> node) {
         if (getRootNode() == null) {
             setRootNode(node);
             return;
         }
-        Node<Integer,Integer> currentNode = getRootNode();
+        Node<K,V> currentNode = getRootNode();
         while (true) {
-            if (node.getKey() > currentNode.getKey()) {
+            int cmp = node.getKey().compareTo(currentNode.getKey());
+            if (cmp > 0) {
                 if (currentNode.hasRight()) {
                     currentNode = currentNode.getRight();
                 } else {
                     currentNode.setRight(node);
                     return;
                 }
-            } else if (node.getKey() < currentNode.getKey()) {
+            } else if (cmp < 0) {
                 if (currentNode.hasLeft()) {
                     currentNode = currentNode.getLeft();
                 } else {
@@ -36,22 +37,23 @@ public class BinarySearchTree extends Tree<Integer,Integer> {
     }
 
     @Override
-    public void deleteNode(Integer key) {
+    public void deleteNode(K key) {
         setRootNode(deleteRecursive(getRootNode(), key));
     }
 
-    private Node<Integer, Integer> deleteRecursive(Node<Integer, Integer> root, Integer key) {
+    private Node<K, V> deleteRecursive(Node<K, V> root, K key) {
         if (root == null) return null;
-        if (key < root.getKey()) {
+        int cmp = key.compareTo(root.getKey());
+        if (cmp < 0) {
             root.setLeft(deleteRecursive(root.getLeft(), key));
-        } else if (key > root.getKey()) {
+        } else if (cmp > 0) {
             root.setRight(deleteRecursive(root.getRight(), key));
         } else {
             // Node to delete found
             if (!root.hasLeft()) return root.getRight();
             if (!root.hasRight()) return root.getLeft();
             // Node with two children: get inorder successor
-            Node<Integer, Integer> minNode = findMin(root.getRight());
+            Node<K, V> minNode = findMin(root.getRight());
             root.setKey(minNode.getKey());
             root.setValue(minNode.getValue());
             root.setRight(deleteRecursive(root.getRight(), minNode.getKey()));
@@ -59,7 +61,7 @@ public class BinarySearchTree extends Tree<Integer,Integer> {
         return root;
     }
 
-    private Node<Integer, Integer> findMin(Node<Integer, Integer> node) {
+    private Node<K, V> findMin(Node<K, V> node) {
         while (node.hasLeft()) {
             node = node.getLeft();
         }

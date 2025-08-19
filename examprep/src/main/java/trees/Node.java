@@ -1,13 +1,11 @@
 package main.java.trees;
 
-public class Node<K,V> {
+public class Node<K extends Comparable<K>,V> {
     private K key;
     private V value;
     private Node<K,V> parent;
     private Node<K,V> left;
     private Node<K,V> right;
-    private boolean hasLeft = false;
-    private boolean hasRight = false;
 
     public Node(K key, V value) {
         this.key = key;
@@ -37,7 +35,6 @@ public class Node<K,V> {
 
     public void setLeft(Node<K, V> left) {
         this.left = left;
-        hasLeft = true;
     }
 
     public Node<K,V> getLeft() {
@@ -46,7 +43,6 @@ public class Node<K,V> {
 
     public void setRight(Node<K, V> right) {
         this.right = right;
-        hasRight = true;
     }
 
     public Node<K,V> getRight() {
@@ -54,11 +50,11 @@ public class Node<K,V> {
     }
 
     public boolean hasLeft() {
-        return hasLeft;
+        return left != null;
     }
 
     public boolean hasRight() {
-        return hasRight;
+        return right != null;
     }
 
     public Node<K, V> getParent() {

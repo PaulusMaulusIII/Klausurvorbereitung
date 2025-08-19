@@ -4,9 +4,9 @@ import java.util.Arrays;
 import java.util.Random;
 
 import main.java.search.BinarySearch;
-import main.java.sorting.CountingSort;
+import main.java.sorting.MergeSort;
 
-public class App implements BinarySearch<Integer>, CountingSort<Integer> {
+public class App implements BinarySearch<Integer>, MergeSort<Integer> {
     final static long SEED = Long.MAX_VALUE;
     final static int MAX_HEIGHT = 4;
     final static int ARRAY_MAX = 30;

@@ -1,5 +1,7 @@
 package main.java.search;
 
+import java.util.NoSuchElementException;
+
 public interface BoyerMoore {
 
     static int NO_OF_CHARS = 256;
@@ -28,7 +30,7 @@ public interface BoyerMoore {
             // Sonst sprigen wir um die Zahl der "schlechten Character" die wir zuvor
             // ermittelt haben
         }
-        return -1;
+        throw new NoSuchElementException();
     }
 
     private int[] badCharHeur(String pattern) {

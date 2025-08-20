@@ -5,9 +5,9 @@ import java.util.Random;
 
 import main.java.search.BinarySearch;
 import main.java.search.BoyerMoore;
-import main.java.sorting.MergeSort;
+import main.java.sorting.InsertionSort;
 
-public class App implements BinarySearch<Integer>, MergeSort<Integer>, BoyerMoore {
+public class App implements BinarySearch<Integer>, InsertionSort<Integer>, BoyerMoore {
     final static long SEED = Long.MAX_VALUE;
     final static int MAX_HEIGHT = 4;
     final static int ARRAY_MAX = 30;

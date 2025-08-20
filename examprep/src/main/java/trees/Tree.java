@@ -184,10 +184,6 @@ public abstract class Tree<K extends Comparable<K>, V> implements Iterable<Node<
 
     public abstract void deleteNode(K key);
 
-    public abstract void balanceTree();
-
-    public abstract void rotateSubTree(Rotation r);
-
     @Override
     public Iterator<Node<K, V>> iterator() {
         return switch (traversal) {

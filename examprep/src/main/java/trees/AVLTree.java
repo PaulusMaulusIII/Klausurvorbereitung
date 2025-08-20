@@ -91,31 +91,7 @@ public class AVLTree<K extends Comparable<K>, V> extends Tree<K, V> {
             current = current.getLeft();
         return current;
     }
-
-    @Override
-    public void balanceTree() {
-        setRootNode(balance(getRootNode()));
-    }
-
-    @Override
-    public void rotateSubTree(Rotation r) {
-        Node<K, V> node = getCurrentNode();
-        if (node == null)
-            return;
-        switch (r) {
-            case LEFT -> setCurrentNode(rotateLeft(node));
-            case RIGHT -> setCurrentNode(rotateRight(node));
-            case DLEFT -> {
-                node.setRight(rotateRight(node.getRight()));
-                setCurrentNode(rotateLeft(node));
-            }
-            case DRIGHT -> {
-                node.setLeft(rotateLeft(node.getLeft()));
-                setCurrentNode(rotateRight(node));
-            }
-        }
-    }
-
+    
     private Node<K, V> rotateLeft(Node<K, V> x) {
         Node<K, V> y = x.getRight();
         x.setRight(y.getLeft());

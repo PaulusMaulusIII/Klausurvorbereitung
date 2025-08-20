@@ -70,17 +70,4 @@ public class BinarySearchTree<K extends Comparable<K>, V> extends Tree<K, V> {
         }
         return node;
     }
-
-    @Override
-    public void balanceTree() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'balanceTree'");
-    }
-
-    @Override
-    public void rotateSubTree(Rotation r) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'rotateSubTree'");
-    }
-
 }

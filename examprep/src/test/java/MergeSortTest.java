@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 
 import main.java.sorting.MergeSort;
+import main.java.tools.InputGenerator;
 
 class MergeSortTest implements MergeSort<Integer> {
 

@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 
 import main.java.sorting.SelectionSort;
+import main.java.tools.InputGenerator;
 
 class SelectionSortTest implements SelectionSort<Integer> {
 

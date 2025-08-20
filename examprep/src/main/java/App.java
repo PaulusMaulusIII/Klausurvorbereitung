@@ -4,9 +4,10 @@ import java.util.Arrays;
 import java.util.Random;
 
 import main.java.search.BinarySearch;
+import main.java.search.BoyerMoore;
 import main.java.sorting.MergeSort;
 
-public class App implements BinarySearch<Integer>, MergeSort<Integer> {
+public class App implements BinarySearch<Integer>, MergeSort<Integer>, BoyerMoore {
     final static long SEED = Long.MAX_VALUE;
     final static int MAX_HEIGHT = 4;
     final static int ARRAY_MAX = 30;
@@ -25,5 +26,10 @@ public class App implements BinarySearch<Integer>, MergeSort<Integer> {
         app.sort(arr);
         System.out.println("Sorted Array: ");
         System.out.println(Arrays.toString(arr));
+
+        String pattern = "Hallo!";
+        String str = "sdaoizfoiasfioHallo!osadfhoiahdsfo";
+
+        System.out.println(app.indexOf(pattern, str));
     }
 }

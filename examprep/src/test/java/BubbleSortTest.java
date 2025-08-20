@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 
 import main.java.sorting.BubbleSort;
+import main.java.tools.InputGenerator;
 
 class BubbleSortTest implements BubbleSort<Integer> {
 

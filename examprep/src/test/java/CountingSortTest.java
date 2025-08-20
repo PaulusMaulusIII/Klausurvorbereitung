@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 
 import main.java.sorting.CountingSort;
+import main.java.tools.InputGenerator;
 
 class CountingSortTest implements CountingSort<Integer> {
 

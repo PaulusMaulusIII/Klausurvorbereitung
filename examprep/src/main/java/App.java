@@ -5,14 +5,14 @@ import java.util.Random;
 
 import main.java.search.BinarySearch;
 import main.java.search.BoyerMoore;
-import main.java.sorting.InsertionSort;
+import main.java.sorting.CountingSort;
 import main.java.trees.AVLTree;
 import main.java.trees.Node;
 
-public class App implements BinarySearch<Integer>, InsertionSort<Integer>, BoyerMoore {
+public class App implements BinarySearch<Integer>, CountingSort<Integer>, BoyerMoore {
     final static long SEED = Long.MAX_VALUE;
     final static int MAX_HEIGHT = 15;
-    final static int ARRAY_MAX = 10;
+    final static int ARRAY_MAX = 5;
     final static int MAX = 5 * ARRAY_MAX;
 
     public static void main(String[] args) {

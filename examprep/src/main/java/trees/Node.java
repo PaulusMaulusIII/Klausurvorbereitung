@@ -65,6 +65,13 @@ public class Node<K extends Comparable<K>, V> {
         this.parent = parent;
     }
 
+    public int getHeight() {
+        if (hasLeft() || hasRight()) {
+            return 1 + Math.max((hasLeft() ? getLeft().getHeight() : 0), (hasRight() ? getRight().getHeight() : 0));
+        }
+        return 1;
+    }
+
     @Override
     public String toString() {
         return "Key: " + key.toString() + " Value: " + value.toString();

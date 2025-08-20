@@ -70,19 +70,11 @@ public class AVLTree<K extends Comparable<K>, V> extends Tree<K, V> {
         return balance(root);
     }
 
-    private int getHeight(Node<K, V> node) {
-        if (node == null)
-            return 0;
-        if (node.hasLeft() || node.hasRight()) {
-            return 1 + Math.max(getHeight(node.getLeft()), getHeight(node.getRight()));
-        }
-        return 1;
-    }
-
     private int getBalance(Node<K, V> node) {
         if (node == null)
             return 0;
-        return getHeight(node.getLeft()) - getHeight(node.getRight());
+        return ((node.getLeft() != null) ? node.getLeft().getHeight() : 0)
+                - ((node.getRight() != null) ? node.getRight().getHeight() : 0);
     }
 
     private Node<K, V> minValueNode(Node<K, V> node) {
@@ -91,7 +83,7 @@ public class AVLTree<K extends Comparable<K>, V> extends Tree<K, V> {
             current = current.getLeft();
         return current;
     }
-    
+
     private Node<K, V> rotateLeft(Node<K, V> x) {
         Node<K, V> y = x.getRight();
         x.setRight(y.getLeft());

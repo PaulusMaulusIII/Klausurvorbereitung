@@ -125,7 +125,7 @@ public abstract class Tree<K extends Comparable<K>, V> implements Iterable<Node<
 
     public int getSubTreeHeight(Node<K, V> node) {
         int height = -1;
-        for (Node<K, V> leaf : getLeaves()) {
+        for (Node<K, V> leaf : getLeaves(node)) {
             int dis = getNodeDistance(node, leaf);
             if (dis > height) {
                 height = dis;
@@ -154,6 +154,28 @@ public abstract class Tree<K extends Comparable<K>, V> implements Iterable<Node<
             if ((!node.hasLeft()) && (!node.hasRight())) {
                 leaves.add(node);
             }
+        }
+        return leaves;
+    }
+
+    public List<Node<K, V>> getLeaves(Node<K, V> root) {
+        List<Node<K, V>> leaves = new LinkedList<Node<K, V>>();
+        Node<K, V> node = root;
+        if (node == null) {
+            return leaves;
+        }
+        while (node.hasLeft() || node.hasRight()) {
+            if (!node.hasLeft() && !node.hasRight()) {
+                leaves.add(node);
+                return leaves;
+            }
+            if (node.hasLeft()) {
+                leaves.addAll(getLeaves(node.getLeft()));
+            }
+            if (node.hasRight()) {
+                leaves.addAll(getLeaves(node.getRight()));
+            }
+            return leaves;
         }
         return leaves;
     }

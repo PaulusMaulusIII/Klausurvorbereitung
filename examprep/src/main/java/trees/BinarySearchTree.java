@@ -1,18 +1,18 @@
 package main.java.trees;
 
-public class BinarySearchTree<K extends Comparable<K>,V> extends Tree<K,V> {
+public class BinarySearchTree<K extends Comparable<K>, V> extends Tree<K, V> {
 
     public BinarySearchTree(Node<K, V> root) {
         super(root);
     }
 
     @Override
-    public void insertNode(Node<K,V> node) {
+    public void insertNode(Node<K, V> node) {
         if (getRootNode() == null) {
             setRootNode(node);
             return;
         }
-        Node<K,V> currentNode = getRootNode();
+        Node<K, V> currentNode = getRootNode();
         while (true) {
             int cmp = node.getKey().compareTo(currentNode.getKey());
             if (cmp > 0) {
@@ -42,7 +42,8 @@ public class BinarySearchTree<K extends Comparable<K>,V> extends Tree<K,V> {
     }
 
     private Node<K, V> deleteRecursive(Node<K, V> root, K key) {
-        if (root == null) return null;
+        if (root == null)
+            return null;
         int cmp = key.compareTo(root.getKey());
         if (cmp < 0) {
             root.setLeft(deleteRecursive(root.getLeft(), key));
@@ -50,8 +51,10 @@ public class BinarySearchTree<K extends Comparable<K>,V> extends Tree<K,V> {
             root.setRight(deleteRecursive(root.getRight(), key));
         } else {
             // Node to delete found
-            if (!root.hasLeft()) return root.getRight();
-            if (!root.hasRight()) return root.getLeft();
+            if (!root.hasLeft())
+                return root.getRight();
+            if (!root.hasRight())
+                return root.getLeft();
             // Node with two children: get inorder successor
             Node<K, V> minNode = findMin(root.getRight());
             root.setKey(minNode.getKey());
@@ -79,5 +82,5 @@ public class BinarySearchTree<K extends Comparable<K>,V> extends Tree<K,V> {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'rotateSubTree'");
     }
-    
+
 }

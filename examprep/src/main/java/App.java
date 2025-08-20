@@ -6,11 +6,13 @@ import java.util.Random;
 import main.java.search.BinarySearch;
 import main.java.search.BoyerMoore;
 import main.java.sorting.InsertionSort;
+import main.java.trees.AVLTree;
+import main.java.trees.Node;
 
 public class App implements BinarySearch<Integer>, InsertionSort<Integer>, BoyerMoore {
     final static long SEED = Long.MAX_VALUE;
-    final static int MAX_HEIGHT = 4;
-    final static int ARRAY_MAX = 30;
+    final static int MAX_HEIGHT = 15;
+    final static int ARRAY_MAX = 10;
     final static int MAX = 5 * ARRAY_MAX;
 
     public static void main(String[] args) {
@@ -31,5 +33,13 @@ public class App implements BinarySearch<Integer>, InsertionSort<Integer>, Boyer
         String str = "sdaoizfoiasfioHallo!osadfhoiahdsfo";
 
         System.out.println(app.indexOf(pattern, str));
+
+        AVLTree<Integer, Integer> avl = new AVLTree<Integer, Integer>(new Node<Integer, Integer>(MAX / 2, MAX / 2));
+        for (int i = 0; i < MAX; i++) {
+            avl.insertNode(new Node<Integer, Integer>(i, i));
+        }
+        avl.printTree();
+        System.out.println(avl.getNodeCount());
+        System.out.println(avl.getTreeHeight());
     }
 }
